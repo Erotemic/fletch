@@ -275,21 +275,25 @@ list(APPEND fletch_external_sources libkml)
 if (fletch_ENABLE_Qt OR fletch_ENABLE_VTK OR fletch_ENABLE_qtExtensions OR
     fletch_ENABLE_ALL_PACKAGES)
   set(Qt_SELECT_VERSION 5.11.2 CACHE STRING "Select the version of Qt to build.")
-  set_property(CACHE Qt_SELECT_VERSION PROPERTY STRINGS "4.8.6" "5.11.2")
+  set_property(CACHE Qt_SELECT_VERSION PROPERTY STRINGS "4.8.6" "5.11.2" "5.12.8")
 
   set(Qt_version ${Qt_SELECT_VERSION})
   string(REPLACE "." ";" Qt_VERSION_LIST ${Qt_version})
   list(GET Qt_VERSION_LIST 0 Qt_version_major)
   list(GET Qt_VERSION_LIST 1 Qt_version_minor)
   list(GET Qt_VERSION_LIST 2 Qt_version_patch)
-  set(Qt_release_location archive) # official_releases or archive
+  set(Qt_release_location new_archive) # official_releases or new_archive
 
   if (Qt_version VERSION_EQUAL 5.11.2)
-    set(Qt_url "http://download.qt-project.org/${Qt_release_location}/qt/5.11/${Qt_version}/single/qt-everywhere-src-${Qt_version}.tar.xz")
+    set(Qt_url "https://download.qt.io/${Qt_release_location}/qt/5.11/${Qt_version}/single/qt-everywhere-src-${Qt_version}.tar.xz")
     set(Qt_md5 "152a8ade9c11fe33ff5bc95310a1bb64")
+  elseif (Qt_version VERSION_EQUAL 5.12.8)
+    set(Qt_release_location archive) # official_releases or new_archive
+    set(Qt_url "https://download.qt.io/${Qt_release_location}/qt/5.12/${Qt_version}/single/qt-everywhere-src-${Qt_version}.tar.xz")
+    set(Qt_md5 "8ec2a0458f3b8e9c995b03df05e006e4")
   elseif (Qt_version VERSION_EQUAL 4.8.6)
-    set(Qt_release_location archive)
-    set(Qt_url "http://download.qt-project.org/${Qt_release_location}/qt/4.8/${Qt_version}/qt-everywhere-opensource-src-${Qt_version}.tar.gz")
+    set(Qt_release_location new_archive)
+    set(Qt_url "https://download.qt.io/${Qt_release_location}/qt/4.8/${Qt_version}/qt-everywhere-opensource-src-${Qt_version}.tar.gz")
     set(Qt_md5 "2edbe4d6c2eff33ef91732602f3518eb")
   else()
     message(ERROR "Qt Version \"${Qt_version}\" Not Supported")
@@ -569,10 +573,10 @@ set(YAMLcpp_dlname "yaml-cpp-release-${YAMLcpp_version}.tar.gz")
 list(APPEND fletch_external_sources YAMLcpp)
 
 # qtExtensions
-set(qtExtensions_version "20190905git873c0676")
-set(qtExtensions_tag "873c06769a2d76e2323152efc40ad910717ce648")
+set(qtExtensions_version "20200330gitb2848e06")
+set(qtExtensions_tag "b2848e06ebba4c39dc63caa2363abc50db75f9d9")
 set(qtExtensions_url "https://github.com/Kitware/qtextensions/archive/${qtExtensions_tag}.tar.gz")
-set(qtExtensions_md5 "f7b617250040e2e4bffa0e2a0bd93c89")
+set(qtExtensions_md5 "24bef5cdaac9d9f0615564b6188a07e5")
 set(qtExtensions_dlname "qtExtensions-${qtExtensions_version}.tar.gz")
 list(APPEND fletch_external_sources qtExtensions)
 
